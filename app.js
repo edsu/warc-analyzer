@@ -84,7 +84,11 @@ class WARCAnalyzer extends LitElement {
       this.recordCount = this.recordCount + 1;
 
       if (record.warcHeaders.headers.get("warc-type") == "response") {
-        const mediaType = record.httpHeaders.headers.get("content-type");
+        let mediaType = record.httpHeaders.headers.get("content-type", "");
+        if (mediaType != null) {
+          mediaType = mediaType.split(";")[0].trim();
+        }
+
         this.mediaTypes = {
           ...this.mediaTypes,
           [mediaType]: (this.mediaTypes[mediaType] || 0) + 1
@@ -194,6 +198,10 @@ class Counts extends LitElement {
     section {
       margin-top: 10px;
     }
+
+    td.count {
+      text-align: right;
+    }
   `
 
   constructor() {
@@ -204,11 +212,12 @@ class Counts extends LitElement {
   render() {
     if (Object.entries(this.counts).length === 0) return '';
 
+    const keys = Object.keys(this.counts).sort((a, b) => this.counts[b] - this.counts[a]);
     return html`
       <section>
         <div class="section-title">${this.name}</div>
         <table>
-          ${Object.entries(this.counts).map(e => html`<tr><td>${e[0]}</td><td>${e[1]}</td></tr>`)}
+          ${keys.map(k => html`<tr><td class="label">${k}</td><td class="count">${this.counts[k]}</td></tr>`)}
         </table>
       </section>
     `
