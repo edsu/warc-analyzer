@@ -1,1 +1,1 @@
-warc-analyzer is a client side webapp for analyzing WARC data using Webrecorder's [warcio.js](https://github.com/webrecorder/warcio.js). No WARC data is uploaded anywhere it runs on your machine.
+warc-analyzer is a proof-of-concept client side webapp for analyzing WARC data using Webrecorder's [warcio.js](https://github.com/webrecorder/warcio.js). No WARC data is uploaded anywhere it runs on your machine. The idea is that it would be useful for archivists who have been given a pile of WARC data and they would like to quickly know what it contains.
